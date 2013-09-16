@@ -1,6 +1,10 @@
 #define uint unsigned int
 #define ulong unsigned long
 
+#define uHelper(a,b,c,d)	luHelper(a,b,c & 0x00000000FFFFFFFF, d)
+#define dHelper(a,b,c,d)	ldHelper(a,b,c & 0x00000000FFFFFFFF, d)
+#define xHelper(a,b,c,d)	lxHelper(a,b,c & 0x00000000FFFFFFFF, d)
+
 void ldHelper(char* buf, int* index, long int number, int base_call)
 {
     if (number / 10)
@@ -18,6 +22,7 @@ void ldHelper(char* buf, int* index, long int number, int base_call)
 
 }
 
+/*
 void dHelper(char* buf, int* index, int number, int base_call)
 {
     if (number / 10)
@@ -34,8 +39,10 @@ void dHelper(char* buf, int* index, int number, int base_call)
 		buf[(*index)++] = '\0';
 
 }
+*/
 
-void uHelper(char* buf, int* index, unsigned int number, int base_call)
+/*
+void uHelper(char* buf, int* index, unsigned long number, int base_call)
 {
     if (number / 10)
 		uHelper(buf, index, number / 10, 0);
@@ -46,6 +53,7 @@ void uHelper(char* buf, int* index, unsigned int number, int base_call)
 	
 
 }
+*/
 
 void luHelper(char* buf, int* index, unsigned long number, int base_call)
 {
@@ -79,7 +87,7 @@ void loHelper(char* buf, int* index, unsigned long number, int base_call)
 	if (base_call)
 		buf[(*index)++] = '\0';
 }
-
+/*
 void xHelper(char* buf, int* index, unsigned int number, int base_call)
 {
 	if (number >> 4)
@@ -96,19 +104,23 @@ void xHelper(char* buf, int* index, unsigned int number, int base_call)
 	if (base_call)
 		buf[(*index)++] = '\0';
 }
+*/
 
 void lxHelper(char* buf, int* index, unsigned long number, int base_call)
 {
 	if (number >> 4)
 		lxHelper(buf, index, number >> 4, 0);
 	
+	/*
 	if (*index == 0)
 	{
 		buf[(*index)++] = '0';
 		buf[(*index)++] = 'x';
 	}
+	*/
+	
 	uint c = number % 16;
-	if (c > 9)	c += 7;
+	if (c > 9)	c += 39;
 	buf[(*index)++] = (char)(((int)'0')+c);
 	if (base_call)
 		buf[(*index)++] = '\0';
