@@ -2,7 +2,6 @@
 #define ulong unsigned long
 
 #define uHelper(a,b,c,d)	luHelper(a,b,c & 0x00000000FFFFFFFF, d)
-#define zzdHelper(a,b,c,d)	ldHelper(a,b,c & 0x00000000FFFFFFFF, d)
 #define xHelper(a,b,c,d)	lxHelper(a,b,c & 0x00000000FFFFFFFF, d)
 
 void ldHelper(char* buf, int* index, long int number, int base_call)
@@ -40,21 +39,6 @@ void dHelper(char* buf, int* index, int number, int base_call)
 
 }
 
-
-/*
-void uHelper(char* buf, int* index, unsigned long number, int base_call)
-{
-    if (number / 10)
-		uHelper(buf, index, number / 10, 0);
-    
-    buf[(*index)++] = (char)((int)'0')+(number % 10);
-    if (base_call)
-		buf[(*index)++] = '\0';
-	
-
-}
-*/
-
 void luHelper(char* buf, int* index, unsigned long number, int base_call)
 {
     if (number / 10)
@@ -87,37 +71,11 @@ void loHelper(char* buf, int* index, unsigned long number, int base_call)
 	if (base_call)
 		buf[(*index)++] = '\0';
 }
-/*
-void xHelper(char* buf, int* index, unsigned int number, int base_call)
-{
-	if (number >> 4)
-		xHelper(buf, index, number >> 4, 0);
-	
-	if (*index == 0)
-	{
-		buf[(*index)++] = '0';
-		buf[(*index)++] = 'x';
-	}
-	uint c = number % 16;
-	if (c > 9)	c += 7;
-	buf[(*index)++] = (char)(((int)'0')+c);
-	if (base_call)
-		buf[(*index)++] = '\0';
-}
-*/
 
 void lxHelper(char* buf, int* index, unsigned long number, int base_call)
 {
 	if (number >> 4)
 		lxHelper(buf, index, number >> 4, 0);
-	
-	/*
-	if (*index == 0)
-	{
-		buf[(*index)++] = '0';
-		buf[(*index)++] = 'x';
-	}
-	*/
 	
 	uint c = number % 16;
 	if (c > 9)	c += 39;
@@ -151,7 +109,6 @@ void fHelper(char* buf, int* index, int number, int base_call)
 
 void printv(char *argv[], void (*print_char)(int))
 {
-    //comment
     char* fmt = argv[0];
     char buf[32];
     int element = 1;
@@ -169,7 +126,6 @@ void printv(char *argv[], void (*print_char)(int))
 		else switch (*++c)
 		{
 			case 'c':
-				//tmp = (long)argv[element] + ((long)argv[++element] << 32);
 				tmp = (ulong)argv[element++];
 				(*print_char)(tmp);
 				break;
@@ -181,7 +137,6 @@ void printv(char *argv[], void (*print_char)(int))
 				break;
 
 			case 'd':
-				//sprintf(buf, "%d", argv[element]);
 				tmp = (ulong)argv[element++];
 				*index = 0;
 				dHelper(buf, index, tmp, 1);
