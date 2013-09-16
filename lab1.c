@@ -1,3 +1,7 @@
+//Author: Christopher Buck
+//Description: ELEC 326 Lab 1 assignment
+//			   Reimplementing printf
+
 #define uint unsigned int
 #define ulong unsigned long
 
