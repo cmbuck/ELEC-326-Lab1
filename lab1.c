@@ -2,7 +2,7 @@
 #define ulong unsigned long
 
 #define uHelper(a,b,c,d)	luHelper(a,b,c & 0x00000000FFFFFFFF, d)
-#define dHelper(a,b,c,d)	ldHelper(a,b,c & 0x00000000FFFFFFFF, d)
+#define zzdHelper(a,b,c,d)	ldHelper(a,b,c & 0x00000000FFFFFFFF, d)
 #define xHelper(a,b,c,d)	lxHelper(a,b,c & 0x00000000FFFFFFFF, d)
 
 void ldHelper(char* buf, int* index, long int number, int base_call)
@@ -22,7 +22,7 @@ void ldHelper(char* buf, int* index, long int number, int base_call)
 
 }
 
-/*
+
 void dHelper(char* buf, int* index, int number, int base_call)
 {
     if (number / 10)
@@ -39,7 +39,7 @@ void dHelper(char* buf, int* index, int number, int base_call)
 		buf[(*index)++] = '\0';
 
 }
-*/
+
 
 /*
 void uHelper(char* buf, int* index, unsigned long number, int base_call)
@@ -133,9 +133,11 @@ void fHelper(char* buf, int* index, int number, int base_call)
 		{
 			buf[(*index)++] = '-';
 			dHelper(buf, index, (number >> 16) + 1, 1);
+			number *= -1;
 		}
 		else	//if positive
 			dHelper(buf, index, number >> 16, 1);
+	
 	number &= 0x0000FFFF;
 	buf[(*index)-1] = '.';
 	while (number)
@@ -256,15 +258,12 @@ void printv(char *argv[], void (*print_char)(int))
 						break;
 					
 				}
+				break;
 				
-	}
+			default:
+				(*print_char)(*c);
+				break;
+		}
     }
 }
-
-/*
-int main()
-{
-  
-}
-*/
 
